@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartwallet/pages/firstpage.dart';
-import 'package:smartwallet/pages/secondpage.dart';
+import 'package:smartwallet/pages/homepage.dart';
 import 'package:smartwallet/pages/balance_controler.dart';
 
 class MyApp extends StatelessWidget {

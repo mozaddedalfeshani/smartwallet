@@ -12,9 +12,14 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController balancecontroler = TextEditingController();
+  final TextEditingController daycontroler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(""),
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -65,6 +70,7 @@ class _FirstPageState extends State<FirstPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 60),
                     child: TextFormField(
+                      controller: daycontroler,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius:
@@ -84,9 +90,13 @@ class _FirstPageState extends State<FirstPage> {
                   onPressed: () {
                     if (_formkey.currentState!.validate()) {
                       BalanceControler.instance.depostit(
-                          //string to int
-                          //for int.parse
-                          int.parse(balancecontroler.text));
+                        //string to int
+                        //for int.parse
+                        int.parse(balancecontroler.text),
+                      );
+                      BalanceControler.instance.setperday(
+                        int.parse(daycontroler.text),
+                      );
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => HomePage()),

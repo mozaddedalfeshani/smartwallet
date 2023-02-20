@@ -25,6 +25,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          BalanceControler.instance.zero();
+        },
+        child: const Text("Reset!"),
+      ),
       appBar: AppBar(
         title: const Text(
           "A penny saved is a penny earned",
@@ -40,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Center(
                 child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.sta,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //balance show
                     AnimatedBuilder(
@@ -50,9 +56,12 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, snapshot) {
                           return Text(
                             BalanceControler.instance.balance.toString(),
-                            style: TextStyle(fontSize: 60),
+                            style: const TextStyle(fontSize: 60),
                           );
                         }),
+                    const SizedBox(
+                      width: 40,
+                    ),
                     //emoji
                     Container(
                       height: 50,
@@ -75,8 +84,17 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
+              AnimatedBuilder(
+                  animation: BalanceControler.instance,
+                  builder: (context, snapshot) {
+                    return Text(
+                        "${BalanceControler.instance.dayleft()} day left!");
+                  }),
+              const SizedBox(
+                height: 20,
+              ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100),
+                padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: TextFormField(
                   controller: wastecontroler,
                   decoration: InputDecoration(
@@ -87,16 +105,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
+              //cutting button
+              //
+              //
               ElevatedButton(
                 onPressed: () {
                   BalanceControler.instance
                       .waste(int.parse(wastecontroler.text));
+                  // clean the waste text field
+                  wastecontroler.clear();
                 },
-                child: Text("Cut from my Balance"),
-              )
+                child: const Text("Update! "),
+              ),
             ],
           ),
         ),
