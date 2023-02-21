@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
         animation: BalanceControler.instance,
         builder: (context, snapshot) {
           return MaterialApp(
+            debugShowCheckedModeBanner: true,
             theme: ThemeData(
               useMaterial3: true,
               colorSchemeSeed: Colors.green,

@@ -16,89 +16,113 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        elevation: 0.0,
-      ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Image.asset(
-                    "assets/walletIcon.png",
-                    height: 300,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                ),
-              ),
-              Form(
-                key: _formkey,
-                child: Column(children: [
-                  Text(
-                    "Your Daily Wallet !",
-                    style: GoogleFonts.lato(),
-                  ),
-
-                  ///adding balance tff
-                  ///controler work
-                  Padding(
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 10),
-                    child: TextFormField(
-                      controller: balancecontroler,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(34),
-                          ),
-                        ),
-                        hintText: "Balance",
+                        horizontal: 50, vertical: 20),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: 150),
+                      child: Image.asset(
+                        "assets/walleticon.png",
+                        //height: 300,
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Add Balance";
-                        }
-                        if (value.length >= 4) {
-                          return "0 to 9999";
-                        }
-                        return null;
-                      },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 60),
-                    child: TextFormField(
-                      controller: daycontroler,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(34),
-                          ),
-                        ),
-                        hintText: "Money/day",
+                ),
+                Text(
+                  "Your Daily Wallet !",
+                  style: GoogleFonts.lato(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      width: 400,
+                      decoration: BoxDecoration(
+                        color: Colors.white60,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please add your daily nedd";
-                        }
-                        return null;
-                      },
+                      child: Form(
+                        key: _formkey,
+                        child: Column(children: [
+                          ///adding balance tff
+                          ///controler work
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            child: TextFormField(
+                              controller: balancecontroler,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(34),
+                                  ),
+                                ),
+                                hintText: "balance",
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please Add Balance";
+                                }
+                                if (!RegExp(r"^\d*$").hasMatch(value)) {
+                                  return "It's should be number";
+                                }
+                                if (value.length >= 6) {
+                                  return "0 to 99999 and must be number";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: TextFormField(
+                              controller: daycontroler,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(34),
+                                  ),
+                                ),
+                                hintText: "money/day",
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please add your daily nedd";
+                                }
+                                if (!RegExp(r"^\d*$").hasMatch(value)) {
+                                  return "It's should be number";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ]),
+                      ),
                     ),
                   ),
-                ]),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: 120,
-                child: ElevatedButton(
-                  onPressed: () {
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () {
                     if (_formkey.currentState!.validate()) {
                       BalanceControler.instance.depostit(
                         //string to int
@@ -119,8 +143,11 @@ class _FirstPageState extends State<FirstPage> {
                     height: 30,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       ),
