@@ -57,11 +57,14 @@ class _FirstPageState extends State<FirstPage> {
                             Radius.circular(34),
                           ),
                         ),
-                        hintText: "Add Balace",
+                        hintText: "Balance",
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please Add Balance";
+                        }
+                        if (value.length >= 4) {
+                          return "0 to 9999";
                         }
                         return null;
                       },
@@ -73,10 +76,18 @@ class _FirstPageState extends State<FirstPage> {
                       controller: daycontroler,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(34))),
-                        hintText: "Daily Need!",
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(34),
+                          ),
+                        ),
+                        hintText: "Money/day",
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please add your daily nedd";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ]),
@@ -103,7 +114,10 @@ class _FirstPageState extends State<FirstPage> {
                       // );
                     }
                   },
-                  child: const Icon(Icons.stacked_bar_chart_rounded),
+                  child: Image.asset(
+                    "assets/start.png",
+                    height: 30,
+                  ),
                 ),
               ),
             ],

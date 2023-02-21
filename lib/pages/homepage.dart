@@ -48,40 +48,47 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //balance show
-                      AnimatedBuilder(
-                          //
-                          //stream: null,
-                          animation: BalanceControler.instance,
-                          builder: (context, snapshot) {
-                            return Text(
-                              BalanceControler.instance.balance.toString(),
-                              style: const TextStyle(fontSize: 60),
-                            );
-                          }),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      //emoji
-                      Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: AnimatedBuilder(
+                  child: Container(
+                    width: 280,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //balance show
+                        AnimatedBuilder(
+                            //
                             //stream: null,
                             animation: BalanceControler.instance,
                             builder: (context, snapshot) {
-                              return Image.asset(
-                                emojiresponse(),
+                              return Text(
+                                BalanceControler.instance.balance.toString(),
+                                style: const TextStyle(fontSize: 60),
                               );
                             }),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        //emoji
+                        Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: AnimatedBuilder(
+                              //stream: null,
+                              animation: BalanceControler.instance,
+                              builder: (context, snapshot) {
+                                return Image.asset(
+                                  emojiresponse(),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -128,6 +135,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      
     );
   }
 }
