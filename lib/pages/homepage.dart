@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartwallet/pages/balance_controler.dart';
+import 'package:smartwallet/pages/firstpage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -135,7 +137,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      
     );
   }
 }
