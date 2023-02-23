@@ -101,7 +101,7 @@ class _FirstPageState extends State<FirstPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please add your daily nedd";
+                                  return "Please add your daily need";
                                 }
                                 if (!RegExp(r"^\d*$").hasMatch(value)) {
                                   return "It's should be number";
