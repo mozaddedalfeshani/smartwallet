@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.0.17
   google_nav_bar: ^5.0.6
   objectbox: ^1.7.2
+  objectbox_flutter_libs: any
 
 dev_dependencies:
   flutter_test:
