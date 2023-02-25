@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
+import 'package:smartwallet/pages/history.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController wasteController = TextEditingController();
+  final TextEditingController reason = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,123 +49,156 @@ class _HomePageState extends State<HomePage> {
       ),
       body: [
         SafeArea(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Center(
-                    child: Container(
-                      //width: 280,
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            //balance show
-                            AnimatedBuilder(
-                                //
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                Center(
+                  child: Container(
+                    //width: 280,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          //balance show
+                          AnimatedBuilder(
+                              //
+                              //stream: null,
+                              animation: BalanceController.instance,
+                              builder: (context, snapshot) {
+                                return Text(
+                                  BalanceController.instance.balance.toString(),
+                                  style: const TextStyle(fontSize: 60),
+                                );
+                              }),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          //emoji
+                          Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: AnimatedBuilder(
                                 //stream: null,
                                 animation: BalanceController.instance,
                                 builder: (context, snapshot) {
-                                  return Text(
-                                    BalanceController.instance.balance
-                                        .toString(),
-                                    style: const TextStyle(fontSize: 60),
+                                  return Image.asset(
+                                    emojiResponse(),
                                   );
                                 }),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            //emoji
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: AnimatedBuilder(
-                                  //stream: null,
-                                  animation: BalanceController.instance,
-                                  builder: (context, snapshot) {
-                                    return Image.asset(
-                                      emojiResponse(),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AnimatedBuilder(
-                      animation: BalanceController.instance,
-                      builder: (context, snapshot) {
-                        return Text(
-                            "${BalanceController.instance.dayLeft()} day left!");
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 100),
-                    child: TextFormField(
-                      controller: wasteController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(23),
-                        ),
-                        hintText: "Amount",
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  //cutting button
-                  //
-                  //
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                AnimatedBuilder(
+                  animation: BalanceController.instance,
+                  builder: (context, snapshot) {
+                    return Text(
+                      "Assume ${BalanceController.instance.dayLeft()} day left!",
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          BalanceController.instance
-                              .waste(int.parse(wasteController.text));
-                          // clean the waste text field
-                          wasteController.clear();
-                        },
-                        child: const Text("Use Money"),
+                      Expanded(
+                        child: TextFormField(
+                          controller: reason,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(23),
+                            ),
+                            hintText: "Reason",
+                          ),
+                        ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          BalanceController.instance
-                              .deposit(int.parse(wasteController.text));
-                          // clean the waste text field
-                          wasteController.clear();
-                        },
-                        child: const Text("Add Money"),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 100,
+                        child: TextFormField(
+                          controller: wasteController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(23),
+                            ),
+                            hintText: "Amount",
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                //cutting button
+                //
+                //
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        BalanceController.instance
+                            .waste(int.parse(wasteController.text));
+                        // clean the waste text field
+                        wasteController.clear();
+                      },
+                      child: const Text("Use Money"),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        BalanceController.instance
+                            .deposit(int.parse(wasteController.text));
+                        WalletDb.instance.addMoney(
+                          Money(
+                            double.parse(wasteController.text),
+                            reason: reason.text.trim(),
+                          ),
+                        );
+                        // clean the waste text field
+                        wasteController.clear();
+                      },
+                      child: const Text("Add Money"),
+                    ),
+                  ],
+                ),
+                FilledButton(
+                  onPressed: () {
+                    WalletDb.instance.printAll();
+                  },
+                  child: Text("Print list"),
+                ),
+              ],
             ),
           ),
         ),
-        const Center(
-          child: Text("Tab 2"),
-        ),
+        const HistoryPage(),
         const Center(
           child: Text("Tab 3"),
         ),
