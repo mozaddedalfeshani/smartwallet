@@ -30,12 +30,14 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController wasteController = TextEditingController();
   final TextEditingController reason = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           BalanceController.instance.zero();
+          WalletDb.instance.resetDB();
         },
         child: const Text("Reset!"),
       ),
@@ -159,18 +161,25 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //
+                    //use money button
                     ElevatedButton(
                       onPressed: () {
                         BalanceController.instance
                             .waste(int.parse(wasteController.text));
                         // clean the waste text field
                         wasteController.clear();
+                        //clean the reason text field
+                        reason.clear();
                       },
                       child: const Text("Use Money"),
                     ),
                     const SizedBox(
                       width: 8,
                     ),
+
+                    //
+                    //add money button
                     ElevatedButton(
                       onPressed: () {
                         BalanceController.instance
@@ -183,16 +192,12 @@ class _HomePageState extends State<HomePage> {
                         );
                         // clean the waste text field
                         wasteController.clear();
+                        //clean the reason text field
+                        reason.clear();
                       },
                       child: const Text("Add Money"),
                     ),
                   ],
-                ),
-                FilledButton(
-                  onPressed: () {
-                    WalletDb.instance.printAll();
-                  },
-                  child: Text("Print list"),
                 ),
               ],
             ),

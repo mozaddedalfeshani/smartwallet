@@ -13,6 +13,10 @@ class WalletDb {
     box?.add(value.toMap());
   }
 
+  useMoney(Money value) {
+    box?.add(value.toMap());
+  }
+
   Money getMoney(int index) {
     return Money.fromMap(box?.getAt(index));
   }
@@ -29,8 +33,8 @@ class WalletDb {
         [];
   }
 
-  printAll() {
-    print(getMoneyList());
+  resetDB() async {
+    await box?.clear();
   }
 }
 
