@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -123,10 +124,11 @@ class _FirstPageState extends State<FirstPage> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      BalanceController.instance.deposit(
-                        //string to int
-                        //for int.parse
-                        int.parse(balanceController.text),
+                      WalletDb.instance.addMoney(
+                        Money(
+                          double.parse(balanceController.text),
+                          reason: "Initial Amount",
+                        ),
                       );
                       BalanceController.instance.setPerDay(
                         int.parse(dayController.text),

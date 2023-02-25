@@ -33,8 +33,20 @@ class WalletDb {
         [];
   }
 
-  resetDB() async {
+  resetDb() async {
     await box?.clear();
+  }
+
+  double totalAmount() {
+    double value = 0;
+    getMoneyList().forEach((element) {
+      value += element.amount;
+    });
+    return value;
+  }
+
+  Stream snapshot() {
+    return box?.watch() ?? const Stream.empty().asBroadcastStream();
   }
 }
 
