@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartwallet/pages/balance_controler.dart';
+import 'package:smartwallet/pages/balance_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FirstPage extends StatefulWidget {
@@ -10,9 +10,9 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  final _formkey = GlobalKey<FormState>();
-  final TextEditingController balancecontroler = TextEditingController();
-  final TextEditingController daycontroler = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController balanceController = TextEditingController();
+  final TextEditingController dayController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _FirstPageState extends State<FirstPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 20),
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: 150),
+                      constraints: const BoxConstraints(minHeight: 150),
                       child: Image.asset(
                         "assets/walleticon.png",
                         //height: 300,
@@ -42,7 +42,7 @@ class _FirstPageState extends State<FirstPage> {
                   "Your Daily Wallet !",
                   style: GoogleFonts.lato(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SingleChildScrollView(
@@ -56,15 +56,14 @@ class _FirstPageState extends State<FirstPage> {
                         border: Border.all(),
                       ),
                       child: Form(
-                        key: _formkey,
+                        key: _formKey,
                         child: Column(children: [
                           ///adding balance tff
-                          ///controler work
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
                             child: TextFormField(
-                              controller: balancecontroler,
+                              controller: balanceController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -90,7 +89,7 @@ class _FirstPageState extends State<FirstPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: TextFormField(
-                              controller: daycontroler,
+                              controller: dayController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -110,7 +109,7 @@ class _FirstPageState extends State<FirstPage> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                         ]),
@@ -123,14 +122,14 @@ class _FirstPageState extends State<FirstPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    if (_formkey.currentState!.validate()) {
-                      BalanceControler.instance.depostit(
+                    if (_formKey.currentState!.validate()) {
+                      BalanceController.instance.deposit(
                         //string to int
                         //for int.parse
-                        int.parse(balancecontroler.text),
+                        int.parse(balanceController.text),
                       );
-                      BalanceControler.instance.setperday(
-                        int.parse(daycontroler.text),
+                      BalanceController.instance.setPerDay(
+                        int.parse(dayController.text),
                       );
                       // Navigator.push(
                       //   context,
@@ -143,7 +142,7 @@ class _FirstPageState extends State<FirstPage> {
                     height: 30,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
               ],

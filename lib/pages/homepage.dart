@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smartwallet/pages/balance_controler.dart';
-import 'package:smartwallet/pages/firstpage.dart';
+import 'package:smartwallet/pages/balance_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,11 +10,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currenttab = 0;
+  int currentTab = 0;
   //cpp function
-  String emojiresponse() {
-    int balance = BalanceControler.instance.balance;
-    int day = BalanceControler.instance.perdayneed;
+  String emojiResponse() {
+    int balance = BalanceController.instance.balance;
+    int day = BalanceController.instance.perDayNeed;
 
     if ((balance / day) <= 2) {
       return "assets/sad.png";
@@ -26,14 +25,14 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final _formkey = GlobalKey<FormState>();
-  final TextEditingController wastecontroler = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController wasteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          BalanceControler.instance.zero();
+          BalanceController.instance.zero();
         },
         child: const Text("Reset!"),
       ),
@@ -49,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         SafeArea(
           child: SingleChildScrollView(
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Column(
                 children: [
                   Center(
@@ -68,10 +67,10 @@ class _HomePageState extends State<HomePage> {
                             AnimatedBuilder(
                                 //
                                 //stream: null,
-                                animation: BalanceControler.instance,
+                                animation: BalanceController.instance,
                                 builder: (context, snapshot) {
                                   return Text(
-                                    BalanceControler.instance.balance
+                                    BalanceController.instance.balance
                                         .toString(),
                                     style: const TextStyle(fontSize: 60),
                                   );
@@ -88,10 +87,10 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: AnimatedBuilder(
                                   //stream: null,
-                                  animation: BalanceControler.instance,
+                                  animation: BalanceController.instance,
                                   builder: (context, snapshot) {
                                     return Image.asset(
-                                      emojiresponse(),
+                                      emojiResponse(),
                                     );
                                   }),
                             ),
@@ -104,10 +103,10 @@ class _HomePageState extends State<HomePage> {
                     height: 20,
                   ),
                   AnimatedBuilder(
-                      animation: BalanceControler.instance,
+                      animation: BalanceController.instance,
                       builder: (context, snapshot) {
                         return Text(
-                            "${BalanceControler.instance.dayleft()} day left!");
+                            "${BalanceController.instance.dayLeft()} day left!");
                       }),
                   const SizedBox(
                     height: 20,
@@ -115,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 100),
                     child: TextFormField(
-                      controller: wastecontroler,
+                      controller: wasteController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(23),
@@ -124,18 +123,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 100),
-                  //   child: TextFormField(
-                  //     controller: wastecontroler,
-                  //     decoration: InputDecoration(
-                  //       border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(23),
-                  //       ),
-                  //       hintText: "reasone",
-                  //     ),
-                  //   ),
-                  // ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -147,22 +134,22 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          BalanceControler.instance
-                              .waste(int.parse(wastecontroler.text));
+                          BalanceController.instance
+                              .waste(int.parse(wasteController.text));
                           // clean the waste text field
-                          wastecontroler.clear();
+                          wasteController.clear();
                         },
                         child: const Text("Use Money"),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          BalanceControler.instance
-                              .depostit(int.parse(wastecontroler.text));
+                          BalanceController.instance
+                              .deposit(int.parse(wasteController.text));
                           // clean the waste text field
-                          wastecontroler.clear();
+                          wasteController.clear();
                         },
                         child: const Text("Add Money"),
                       ),
@@ -173,21 +160,24 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        SizedBox(),
-        SizedBox(),
-      ][currenttab],
+        const Center(
+          child: Text("Tab 2"),
+        ),
+        const Center(
+          child: Text("Tab 3"),
+        ),
+      ][currentTab],
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: GNav(
-            selectedIndex: currenttab,
+            selectedIndex: currentTab,
             color: Theme.of(context).colorScheme.onSurface,
             activeColor: Theme.of(context).colorScheme.primary,
             onTabChange: (value) {
               setState(() {
-                currenttab = value;
-                print("$value");
+                currentTab = value;
               });
             },
             tabs: const [

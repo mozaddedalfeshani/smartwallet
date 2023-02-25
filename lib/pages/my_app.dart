@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartwallet/pages/firstpage.dart';
+import 'package:smartwallet/pages/first_page.dart';
 import 'package:smartwallet/pages/homepage.dart';
-import 'package:smartwallet/pages/balance_controler.dart';
+import 'package:smartwallet/pages/balance_controller.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         //stream: null,
-        animation: BalanceControler.instance,
+        animation: BalanceController.instance,
         builder: (context, snapshot) {
           return MaterialApp(
             debugShowCheckedModeBanner: true,
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               colorSchemeSeed: Colors.green,
             ),
-            home: (BalanceControler.instance.balance == 0)
+            home: (BalanceController.instance.balance == 0)
                 ? const FirstPage()
                 : const HomePage(),
           );

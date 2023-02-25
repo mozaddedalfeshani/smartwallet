@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smartwallet/pages/balance_controler.dart';
-import 'package:smartwallet/pages/myapp.dart';
+import 'package:smartwallet/pages/balance_controller.dart';
+import 'package:smartwallet/pages/my_app.dart';
 
 void main() async {
   //flutter initialize
   WidgetsFlutterBinding.ensureInitialized();
-  await BalanceControler.instance.loadbalance();
+  await BalanceController.instance.loadBalance();
   runApp(const MyApp());
 }
