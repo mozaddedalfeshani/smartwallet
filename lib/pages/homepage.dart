@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
 import 'package:smartwallet/pages/history.dart';
+import 'package:smartwallet/pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,14 +44,16 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.restore),
               label: const Text("Reset!"),
             ),
-      appBar: AppBar(
-        title: const Text(
-          "A penny saved is a penny earned",
-          style: TextStyle(color: Colors.black),
-        ),
-        elevation: 0.0,
-        shadowColor: Colors.white,
-      ),
+      appBar: (currentTab == 2)
+          ? null
+          : AppBar(
+              title: const Text(
+                "A penny saved is a penny earned",
+                style: TextStyle(color: Colors.black),
+              ),
+              elevation: 0.0,
+              shadowColor: Colors.white,
+            ),
       body: [
         SafeArea(
           child: Form(
@@ -243,9 +246,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const HistoryPage(),
-        const Center(
-          child: Text("Tab 3"),
-        ),
+        ProfilePage(),
       ][currentTab],
       bottomNavigationBar: Container(
         color: Colors.white,
