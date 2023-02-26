@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartwallet/database/database.dart';
@@ -246,7 +247,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const HistoryPage(),
-        ProfilePage(),
+        const ProfilePage(),
       ][currentTab],
       bottomNavigationBar: Container(
         color: Colors.white,
@@ -263,7 +264,7 @@ class _HomePageState extends State<HomePage> {
             },
             tabs: const [
               GButton(
-                icon: Icons.home,
+                icon: CupertinoIcons.home,
                 text: "Home",
               ),
               GButton(
@@ -271,8 +272,8 @@ class _HomePageState extends State<HomePage> {
                 text: "History",
               ),
               GButton(
-                icon: Icons.report,
-                text: "Support",
+                icon: CupertinoIcons.person,
+                text: "Profile",
               ),
             ],
           ),

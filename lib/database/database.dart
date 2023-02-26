@@ -51,16 +51,19 @@ class WalletDb {
 }
 
 class Money {
-  const Money(
+  Money(
     this.amount, {
     this.reason,
+    this.dateTime,
   });
   final String? reason;
   final double amount;
+  final DateTime? dateTime;
   Map<String, dynamic> toMap() {
     return {
       "reason": reason,
       'amount': amount,
+      'date_time': dateTime,
     };
   }
 
@@ -68,11 +71,12 @@ class Money {
     return Money(
       value["amount"],
       reason: value["reason"],
+      dateTime: value["date_time"],
     );
   }
 
   @override
   String toString() {
-    return "<Amount: {$amount} reason: '$reason'>";
+    return "<Amount: {$amount} dateTime: $dateTime reason: '$reason'>";
   }
 }
