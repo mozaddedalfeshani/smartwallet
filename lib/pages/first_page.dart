@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
@@ -33,7 +32,7 @@ class _FirstPageState extends State<FirstPage> {
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(minHeight: 150),
                       child: Image.asset(
-                        "assets/walleticon.png",
+                        "assets/walletIcon.png",
                         //height: 300,
                       ),
                     ),
@@ -121,8 +120,8 @@ class _FirstPageState extends State<FirstPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  onTap: () {
+                ElevatedButton(
+                  onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       WalletDb.instance.addMoney(
                         Money(
@@ -139,10 +138,7 @@ class _FirstPageState extends State<FirstPage> {
                       // );
                     }
                   },
-                  child: Image.asset(
-                    "assets/start.png",
-                    height: 30,
-                  ),
+                  child: Icon(Icons.analytics_outlined),
                 ),
                 const SizedBox(
                   height: 30,

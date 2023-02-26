@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
 
@@ -52,11 +51,11 @@ class _ProfilePageState extends State<ProfilePage> {
           height: 20,
         ),
         const Text(
-          "Total",
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          "S U M M A R Y",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(
-          height: 20,
+          height: 30,
         ),
         //life time box
         Row(
@@ -69,8 +68,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.green.shade100,
                 ),
-                height: 200,
-                width: 200,
+                height: 150,
+                width: 150,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -96,8 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.red.shade100,
                 ),
-                height: 200,
-                width: 200,
+                height: 150,
+                width: 150,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

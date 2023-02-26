@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartwallet/database/database.dart';
@@ -49,7 +50,6 @@ class _HomePageState extends State<HomePage> {
           : AppBar(
               title: const Text(
                 "A penny saved is a penny earned",
-                
               ),
               elevation: 0.0,
               shadowColor: Colors.white,
@@ -263,16 +263,16 @@ class _HomePageState extends State<HomePage> {
             },
             tabs: const [
               GButton(
-                icon: Icons.home,
-                text: "Home",
+                icon: CupertinoIcons.home,
+                text: " Home",
               ),
               GButton(
                 icon: Icons.history_toggle_off,
-                text: "History",
+                text: " History",
               ),
               GButton(
-                icon: Icons.report,
-                text: "Support",
+                icon: CupertinoIcons.leaf_arrow_circlepath,
+                text: " Profile",
               ),
             ],
           ),
