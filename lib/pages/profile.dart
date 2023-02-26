@@ -30,79 +30,105 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Container(
-          height: 200,
-          width: 200,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            //color: Colors.green,
+    return SingleChildScrollView(
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Container(
+            height: 200,
+            width: 200,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              //color: Colors.green,
+            ),
+            child: StreamBuilder(
+                stream: WalletDb.instance.snapshot(),
+                builder: (context, snapshot) {
+                  return Image.asset(emojiResponse());
+                }),
           ),
-          child: StreamBuilder(
-              stream: WalletDb.instance.snapshot(),
-              builder: (context, snapshot) {
-                return Image.asset(emojiResponse());
-              }),
         ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      const Text("M  A  M U R A D"),
-      const SizedBox(
-        height: 20,
-      ),
-      //life time box
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.green.shade100,
-              ),
-              height: 200,
-              width: 200,
-              child: Column(children: [
-                Text(
-                  "Lifetime Use ",
-                  style: GoogleFonts.lato(),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          "Total",
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        //life time box
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.green.shade100,
                 ),
-              ]),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.red.shade100,
+                height: 200,
+                width: 200,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Added ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30),
+                      ),
+                      Center(
+                        child: Text(
+                          WalletDb.instance.lifeTimeEntity().toString(),
+                          style: const TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ]),
               ),
-              height: 200,
-              width: 200,
-              child: Column(
-                children: const [
-                  Text(
-                    "All Time lost ",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.red.shade100,
+                ),
+                height: 200,
+                width: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Usage ",
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      WalletDb.instance.lifeTimeUse().toString(),
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
+          ],
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        Center(
+          child: FilledButton(
+            onPressed: () {
+              WalletDb.instance.resetDb();
+            },
+            child: const Text("Reset All"),
           ),
-        ],
-      ),
-      const SizedBox(
-        height: 40,
-      ),
-      ElevatedButton(
-        onPressed: () {},
-        child: const Text("Donate ! :) "),
-      ),
-    ]);
+        ),
+      ]),
+    );
   }
 }

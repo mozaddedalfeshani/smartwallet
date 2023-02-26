@@ -39,9 +39,9 @@ class _FirstPageState extends State<FirstPage> {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "Your Daily Wallet !",
-                  style: GoogleFonts.lato(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 10,
