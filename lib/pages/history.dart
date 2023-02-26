@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +19,12 @@ class _HistoryPageState extends State<HistoryPage> {
       child: ListView.builder(
         itemCount: moneys.length,
         itemBuilder: (context, index) {
-          return HistoryListTile(money: moneys[index]);
+          return HistoryListTile(
+            money: moneys[index],
+            balance: WalletDb.instance
+                .balanceAtIndex(moneys.length - index - 1)
+                .toString(),
+          );
         },
       ),
     );
@@ -26,12 +32,10 @@ class _HistoryPageState extends State<HistoryPage> {
 }
 
 class HistoryListTile extends StatelessWidget {
-  const HistoryListTile({
-    super.key,
-    required this.money,
-  });
+  const HistoryListTile({super.key, required this.money, this.balance});
 
   final Money money;
+  final String? balance;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class HistoryListTile extends StatelessWidget {
         ),
         child: ListTile(
           title: Text(
-            "Reason: ${money.reason}",
+            "${DateFormat("dd-MM-yyyy").format(money.dateTime)}\nReason: ${money.reason}",
             style: GoogleFonts.lato(),
           ),
           subtitle: RichText(
@@ -63,6 +67,10 @@ class HistoryListTile extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(top: 13),
+            child: Text(balance ?? ""),
           ),
         ),
       ),

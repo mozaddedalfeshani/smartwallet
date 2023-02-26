@@ -231,10 +231,18 @@ class _HomePageState extends State<HomePage> {
                                                   1);
                                       i++) ...[
                                     HistoryListTile(
-                                        money: WalletDb.instance
-                                            .getMoneyList()
-                                            .reversed
-                                            .elementAt(i)),
+                                      money: WalletDb.instance
+                                          .getMoneyList()
+                                          .reversed
+                                          .elementAt(i),
+                                      balance: WalletDb.instance
+                                          .balanceAtIndex(WalletDb.instance
+                                                  .getMoneyList()
+                                                  .length -
+                                              i -
+                                              1)
+                                          .toString(),
+                                    ),
                                   ]
                                 ],
                               ),

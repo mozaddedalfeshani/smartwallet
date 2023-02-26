@@ -17,6 +17,38 @@ class WalletDb {
     box?.add(value.toMap());
   }
 
+  double lifeTimeEntity() {
+    double value = 0;
+    getMoneyList().forEach((element) {
+      if (!element.amount.isNegative) {
+        value += element.amount;
+      }
+    });
+    return value;
+  }
+
+  double lifeTimeUse() {
+    double value = 0;
+    getMoneyList().forEach((element) {
+      if (element.amount.isNegative) {
+        value += element.amount;
+      }
+    });
+    return value.abs();
+  }
+
+  double balanceAtIndex(int index) {
+    double value = 0;
+    List<Money> moneys = getMoneyList();
+    if (moneys.length <= index) {
+      return 0;
+    }
+    for (int i = 0; i <= index; i++) {
+      value += moneys[i].amount;
+    }
+    return value;
+  }
+
   Money getMoney(int index) {
     return Money.fromMap(box?.getAt(index));
   }
@@ -54,11 +86,12 @@ class Money {
   Money(
     this.amount, {
     this.reason,
-    this.dateTime,
-  });
+    DateTime? dateTime,
+  }) : _dateTime = dateTime;
   final String? reason;
   final double amount;
-  final DateTime? dateTime;
+  final DateTime? _dateTime;
+  DateTime get dateTime => _dateTime ?? DateTime.now();
   Map<String, dynamic> toMap() {
     return {
       "reason": reason,
@@ -67,14 +100,10 @@ class Money {
     };
   }
 
-  static Money fromMap(Map<String, dynamic> value) {
-    return Money(
-      value["amount"],
-      reason: value["reason"],
-      dateTime: value["date_time"],
-    );
-  }
-
+  Money.fromMap(Map<String, dynamic> value)
+      : amount = value["amount"],
+        reason = value["reason"],
+        _dateTime = value["date_time"];
   @override
   String toString() {
     return "<Amount: {$amount} dateTime: $dateTime reason: '$reason'>";

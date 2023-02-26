@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.0.17
   google_nav_bar: ^5.0.6
   hive_flutter: ^1.1.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
