@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smartwallet/database/database.dart';
+import 'package:smartwallet/pages/balance_controller.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String emojiResponse() {
+    double balance = WalletDb.instance.totalAmount();
+    int day = BalanceController.instance.perDayNeed;
+
+    if ((balance / day) <= 2) {
+      return "assets/twoday.gif";
+    } else if ((balance / day) > 2 && (balance / day) <= 5) {
+      return "assets/lt5d.gif";
+    } else if ((balance / day) > 5 && (balance / day) <= 10) {
+      return "assets/lt7d.gif";
+    } else if ((balance / day) > 10 && (balance / day) <= 20) {
+      return "assets/mt10d.gif";
+    } else {
+      return "assets/mt20d.gif";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +38,13 @@ class ProfilePage extends StatelessWidget {
           width: 200,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.green,
+            //color: Colors.green,
           ),
+          child: StreamBuilder(
+              stream: WalletDb.instance.snapshot(),
+              builder: (context, snapshot) {
+                return Image.asset(emojiResponse());
+              }),
         ),
       ),
       const SizedBox(

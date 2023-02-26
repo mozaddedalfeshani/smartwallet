@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     if ((balance / day) <= 2) {
       return "assets/sad.png";
     } else if ((balance / day) > 2 && (balance / day) < 7) {
-      return "assets/twoDay.jpeg";
+      return "assets/twoDay.png";
     } else {
       return "assets/happy.png";
     }
@@ -48,10 +48,7 @@ class _HomePageState extends State<HomePage> {
       appBar: (currentTab == 2)
           ? null
           : AppBar(
-              title: const Text(
-                "A penny saved is a penny earned",
-                style: TextStyle(color: Colors.black),
-              ),
+              title: const Text("A penny saved is a penny earned"),
               elevation: 0.0,
               shadowColor: Colors.white,
             ),
@@ -97,7 +94,6 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   height: 50,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: AnimatedBuilder(
@@ -258,10 +254,10 @@ class _HomePageState extends State<HomePage> {
         const ProfilePage(),
       ][currentTab],
       bottomNavigationBar: Container(
-        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: GNav(
+            backgroundColor: Theme.of(context).colorScheme.surface,
             selectedIndex: currentTab,
             color: Theme.of(context).colorScheme.onSurface,
             activeColor: Theme.of(context).colorScheme.primary,
@@ -273,15 +269,15 @@ class _HomePageState extends State<HomePage> {
             tabs: const [
               GButton(
                 icon: CupertinoIcons.home,
-                text: "Home",
+                text: " Home",
               ),
               GButton(
                 icon: Icons.history_toggle_off,
-                text: "History",
+                text: " History",
               ),
               GButton(
                 icon: CupertinoIcons.person,
-                text: "Profile",
+                text: " Profile",
               ),
             ],
           ),
