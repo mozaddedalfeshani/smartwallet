@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smartwallet/utils/double_formatter.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -21,9 +22,8 @@ class _HistoryPageState extends State<HistoryPage> {
         itemBuilder: (context, index) {
           return HistoryListTile(
             money: moneys[index],
-            balance: WalletDb.instance
-                .balanceAtIndex(moneys.length - index - 1)
-                .toString(),
+            balance: doubleFormatter(
+                WalletDb.instance.balanceAtIndex(moneys.length - index - 1)),
           );
         },
       ),
@@ -50,7 +50,7 @@ class HistoryListTile extends StatelessWidget {
         ),
         child: ListTile(
           title: Text(
-            "${DateFormat("dd-MM-yyyy").format(money.dateTime)}\nReason: ${money.reason}",
+            "${DateFormat("dd-MM-yyyy").format(money.dateTime)}\n${DateFormat.jm().format(money.dateTime)}\nReason: ${money.reason}",
             style: GoogleFonts.lato(),
           ),
           subtitle: RichText(
@@ -59,7 +59,7 @@ class HistoryListTile extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
                 TextSpan(
-                  text: "${money.amount}",
+                  text: doubleFormatter(money.amount),
                   style: TextStyle(
                       color: (money.amount >= 0)
                           ? Colors.green
@@ -70,7 +70,10 @@ class HistoryListTile extends StatelessWidget {
           ),
           trailing: Padding(
             padding: const EdgeInsets.only(top: 13),
-            child: Text(balance ?? ""),
+            child: Text(
+              balance ?? "",
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ),
       ),

@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
 import 'package:smartwallet/pages/history.dart';
 import 'package:smartwallet/pages/profile.dart';
+import 'package:smartwallet/utils/double_formatter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,8 +42,14 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: (currentTab != 0)
           ? null
           : FloatingActionButton.extended(
-              onPressed: () {
+              onPressed: () async {
+                final SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+                double lifeTimeUse = await WalletDb.instance.lifeTimeUse();
+                double lifeTimeEntry = await WalletDb.instance.lifeTimeEntity();
                 WalletDb.instance.resetDb();
+                pref.setDouble("life_time_use", lifeTimeUse);
+                pref.setDouble("life_time_entry", lifeTimeEntry);
               },
               icon: const Icon(Icons.restore),
               label: const Text("Reset!"),
@@ -51,8 +60,6 @@ class _HomePageState extends State<HomePage> {
               title: const Text(
                 "A penny saved is a penny earned",
               ),
-              elevation: 0.0,
-              shadowColor: Colors.white,
             ),
       body: [
         SafeArea(
@@ -82,11 +89,12 @@ class _HomePageState extends State<HomePage> {
                                 StreamBuilder(
                                     stream: WalletDb.instance.snapshot(),
                                     builder: (context, snapshot) {
-                                      return Text(
-                                        WalletDb.instance
-                                            .totalAmount()
-                                            .toString(),
-                                        style: const TextStyle(fontSize: 60),
+                                      return Flexible(
+                                        child: Text(
+                                          doubleFormatter(
+                                              WalletDb.instance.totalAmount()),
+                                          style: const TextStyle(fontSize: 60),
+                                        ),
                                       );
                                     }),
                                 const SizedBox(
@@ -148,6 +156,11 @@ class _HomePageState extends State<HomePage> {
                               width: 100,
                               child: TextFormField(
                                 controller: wasteController,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter(
+                                      RegExp(r"^[0-9]*$"),
+                                      allow: true)
+                                ],
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(23),
@@ -248,34 +261,31 @@ class _HomePageState extends State<HomePage> {
         const HistoryPage(),
         const ProfilePage(),
       ][currentTab],
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: GNav(
-            selectedIndex: currentTab,
-            color: Theme.of(context).colorScheme.onSurface,
-            activeColor: Theme.of(context).colorScheme.primary,
-            onTabChange: (value) {
-              setState(() {
-                currentTab = value;
-              });
-            },
-            tabs: const [
-              GButton(
-                icon: CupertinoIcons.home,
-                text: " Home",
-              ),
-              GButton(
-                icon: Icons.history_toggle_off,
-                text: " History",
-              ),
-              GButton(
-                icon: CupertinoIcons.leaf_arrow_circlepath,
-                text: " Profile",
-              ),
-            ],
-          ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GNav(
+          selectedIndex: currentTab,
+          color: Theme.of(context).colorScheme.onSurface,
+          activeColor: Theme.of(context).colorScheme.primary,
+          onTabChange: (value) {
+            setState(() {
+              currentTab = value;
+            });
+          },
+          tabs: const [
+            GButton(
+              icon: CupertinoIcons.home,
+              text: " Home",
+            ),
+            GButton(
+              icon: Icons.history_toggle_off,
+              text: " History",
+            ),
+            GButton(
+              icon: CupertinoIcons.leaf_arrow_circlepath,
+              text: " Profile",
+            ),
+          ],
         ),
       ),
     );

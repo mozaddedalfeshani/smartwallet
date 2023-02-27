@@ -138,7 +138,7 @@ class _FirstPageState extends State<FirstPage> {
                       // );
                     }
                   },
-                  child: Icon(Icons.analytics_outlined),
+                  child: const Icon(Icons.analytics_outlined),
                 ),
                 const SizedBox(
                   height: 30,

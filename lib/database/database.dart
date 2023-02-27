@@ -1,4 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WalletDb {
   WalletDb._();
@@ -10,15 +11,19 @@ class WalletDb {
   }
 
   addMoney(Money value) {
+    if (totalAmount() + value.amount < 0) {
+      return;
+    }
     box?.add(value.toMap());
   }
 
-  useMoney(Money value) {
-    box?.add(value.toMap());
-  }
+  // useMoney(Money value) {
+  //   box?.add(value.toMap());
+  // }
 
-  double lifeTimeEntity() {
-    double value = 0;
+  Future<double> lifeTimeEntity() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    double value = pref.getDouble("life_time_entry") ?? 0;
     getMoneyList().forEach((element) {
       if (!element.amount.isNegative) {
         value += element.amount;
@@ -27,8 +32,9 @@ class WalletDb {
     return value;
   }
 
-  double lifeTimeUse() {
-    double value = 0;
+  Future<double> lifeTimeUse() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    double value = (-1) * (pref.getDouble("life_time_use")?.abs() ?? 0);
     getMoneyList().forEach((element) {
       if (element.amount.isNegative) {
         value += element.amount;
