@@ -24,11 +24,23 @@ class _HomePageState extends State<HomePage> {
     int day = BalanceController.instance.perDayNeed;
 
     if ((balance / day) <= 2) {
-      return "assets/sad.png";
+      if (Theme.of(context).brightness == Brightness.dark) {
+        return "assets/darktheme/saddark.png";
+      } else {
+        return "assets/sad.png";
+      }
     } else if ((balance / day) > 2 && (balance / day) < 7) {
-      return "assets/twoDay.png";
+      if (Theme.of(context).brightness == Brightness.dark) {
+        return "assets/darktheme/twodaynight.png";
+      } else {
+        return "assets/twoDay.png";
+      }
     } else {
-      return "assets/happy.png";
+      if (Theme.of(context).brightness == Brightness.dark) {
+        return "assets/darktheme/happydark.png";
+      } else {
+        return "assets/happy.png";
+      }
     }
   }
 
@@ -104,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   height: 50,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: AnimatedBuilder(
