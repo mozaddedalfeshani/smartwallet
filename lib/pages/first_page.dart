@@ -48,31 +48,24 @@ class _FirstPageState extends State<FirstPage> {
                 SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Container(
-                      width: 400,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white70
-                            : Colors.green.shade100,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(),
-                      ),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(children: [
-                          ///adding balance tff
+                    child: Form(
+                      key: _formKey,
+                      child: Column(children: [
+                        if (Theme.of(context).brightness ==
+                            Brightness.dark) ...{
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
                             child: TextFormField(
                               controller: balanceController,
                               decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(34),
+                                    Radius.circular(18),
                                   ),
                                 ),
-                                hintText: "balance",
+                                hintText: "Balance",
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -93,12 +86,13 @@ class _FirstPageState extends State<FirstPage> {
                             child: TextFormField(
                               controller: dayController,
                               decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(34),
+                                    Radius.circular(18),
                                   ),
                                 ),
-                                hintText: "money/day",
+                                hintText: "Money/Day",
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -111,11 +105,75 @@ class _FirstPageState extends State<FirstPage> {
                               },
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
+                        } else if (Theme.of(context).brightness ==
+                            Brightness.light)
+                          Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 10),
+                                  child: TextFormField(
+                                    controller: balanceController,
+                                    decoration: const InputDecoration(
+                                      hintStyle: TextStyle(color: Colors.black),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(18),
+                                        ),
+                                      ),
+                                      hintText: "Balance",
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Please Add Balance";
+                                      }
+                                      if (!RegExp(r"^\d*$").hasMatch(value)) {
+                                        return "It's should be number";
+                                      }
+                                      if (value.length >= 6) {
+                                        return "0 to 99999 and must be number";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  child: TextFormField(
+                                    controller: dayController,
+                                    decoration: const InputDecoration(
+                                      hintStyle: TextStyle(color: Colors.black),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(18),
+                                        ),
+                                      ),
+                                      hintText: "Money/Day",
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Please add your daily need";
+                                      }
+                                      if (!RegExp(r"^\d*$").hasMatch(value)) {
+                                        return "It's should be number";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ]),
-                      ),
+
+                        ///adding balance tff
+
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ]),
                     ),
                   ),
                 ),
