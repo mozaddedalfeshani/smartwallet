@@ -51,7 +51,9 @@ class _FirstPageState extends State<FirstPage> {
                     child: Container(
                       width: 400,
                       decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white70
+                            : Colors.green.shade100,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(),
                       ),

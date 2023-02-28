@@ -1,11 +1,6 @@
-# smartwallet
+# SmartWallet cross platform Application , That's make your life easyer
+**you should try as soon possible**
+ download smartwallet.apk from **[Here](https://github.com/mozaddedalfeshani/smartwallet/releases/tag/smartwallet_0.3)**
 
-A new Flutter project.
+    
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-# smartwallet
