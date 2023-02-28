@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
@@ -22,18 +23,18 @@ class _FirstPageState extends State<FirstPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 20),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(minHeight: 150),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        "assets/walletIcon.png",
-                        //height: 300,
+                        "assets/animated/intro2.gif",
                       ),
                     ),
                   ),
@@ -55,7 +56,7 @@ class _FirstPageState extends State<FirstPage> {
                             Brightness.dark) ...{
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
+                                horizontal: 40, vertical: 10),
                             child: TextFormField(
                               controller: balanceController,
                               decoration: const InputDecoration(
@@ -82,7 +83,7 @@ class _FirstPageState extends State<FirstPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: TextFormField(
                               controller: dayController,
                               decoration: const InputDecoration(
@@ -113,7 +114,7 @@ class _FirstPageState extends State<FirstPage> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 10),
+                                      horizontal: 40, vertical: 10),
                                   child: TextFormField(
                                     controller: balanceController,
                                     decoration: const InputDecoration(
@@ -141,7 +142,7 @@ class _FirstPageState extends State<FirstPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 30),
+                                      horizontal: 40),
                                   child: TextFormField(
                                     controller: dayController,
                                     decoration: const InputDecoration(
@@ -180,28 +181,34 @@ class _FirstPageState extends State<FirstPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      WalletDb.instance.addMoney(
-                        Money(
-                          double.parse(balanceController.text),
-                          reason: "Initial Amount",
-                        ),
-                      );
-                      BalanceController.instance.setPerDay(
-                        int.parse(dayController.text),
-                      );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => HomePage()),
-                      // );
-                    }
-                  },
-                  child: const Icon(Icons.analytics_outlined),
-                ),
-                const SizedBox(
-                  height: 30,
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        WalletDb.instance.addMoney(
+                          Money(
+                            double.parse(balanceController.text),
+                            reason: "Initial Amount",
+                          ),
+                        );
+                        BalanceController.instance.setPerDay(
+                          int.parse(dayController.text),
+                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => HomePage()),
+                        // );
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(CupertinoIcons.graph_square_fill),
+                        Text(" Analyse"),
+                        //Icon(CupertinoIcons.arrow_right),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

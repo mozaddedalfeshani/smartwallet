@@ -63,8 +63,8 @@ class _HomePageState extends State<HomePage> {
                 pref.setDouble("life_time_use", lifeTimeUse);
                 pref.setDouble("life_time_entry", lifeTimeEntry);
               },
-              icon: const Icon(Icons.restore),
-              label: const Text("Reset!"),
+              icon: const Icon(CupertinoIcons.arrow_2_circlepath),
+              label: const Text("Reset"),
             ),
       appBar: (currentTab == 2)
           ? null
@@ -290,12 +290,12 @@ class _HomePageState extends State<HomePage> {
               text: " Home",
             ),
             GButton(
-              icon: Icons.history_toggle_off,
+              icon: CupertinoIcons.news,
               text: " History",
             ),
             GButton(
-              icon: CupertinoIcons.leaf_arrow_circlepath,
-              text: " Profile",
+              icon: CupertinoIcons.chart_bar,
+              text: " More",
             ),
           ],
         ),
