@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: StreamBuilder(
                   stream: WalletDb.instance.snapshot(),
                   builder: (context, snapshot) {
-                    return Image.asset(emojiResponse());
+                    return Image(image: AssetImage(emojiResponse())..evict());
                   }),
             ),
           ),

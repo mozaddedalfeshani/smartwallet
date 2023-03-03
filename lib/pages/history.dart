@@ -15,18 +15,30 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     List<Money> moneys = WalletDb.instance.getMoneyList().reversed.toList();
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: ListView.builder(
-        itemCount: moneys.length,
-        itemBuilder: (context, index) {
-          return HistoryListTile(
-            money: moneys[index],
-            balance: doubleFormatter(
-                WalletDb.instance.balanceAtIndex(moneys.length - index - 1)),
-          );
-        },
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate.fixed(
+            [
+              Image(
+                image: const AssetImage("assets/animated/history.gif")..evict(),
+              ),
+            ],
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return HistoryListTile(
+                money: moneys[index],
+                balance: doubleFormatter(WalletDb.instance
+                    .balanceAtIndex(moneys.length - index - 1)),
+              );
+            },
+            childCount: moneys.length,
+          ),
+        ),
+      ],
     );
   }
 }
