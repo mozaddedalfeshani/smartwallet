@@ -19,30 +19,30 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentTab = 0;
   //cpp function
-  String emojiResponse() {
-    double balance = WalletDb.instance.totalAmount();
-    int day = BalanceController.instance.perDayNeed;
+  // String emojiResponse() {
+  //   double balance = WalletDb.instance.totalAmount();
+  //   int day = BalanceController.instance.perDayNeed;
 
-    if ((balance / day) <= 2) {
-      if (Theme.of(context).brightness == Brightness.dark) {
-        return "assets/darktheme/saddark.png";
-      } else {
-        return "assets/sad.png";
-      }
-    } else if ((balance / day) > 2 && (balance / day) < 7) {
-      if (Theme.of(context).brightness == Brightness.dark) {
-        return "assets/darktheme/twodaynight.png";
-      } else {
-        return "assets/twoDay.png";
-      }
-    } else {
-      if (Theme.of(context).brightness == Brightness.dark) {
-        return "assets/darktheme/happydark.png";
-      } else {
-        return "assets/happy.png";
-      }
-    }
-  }
+  //   if ((balance / day) <= 2) {
+  //     if (Theme.of(context).brightness == Brightness.dark) {
+  //       return "assets/darktheme/saddark.png";
+  //     } else {
+  //       return "assets/sad.png";
+  //     }
+  //   } else if ((balance / day) > 2 && (balance / day) < 7) {
+  //     if (Theme.of(context).brightness == Brightness.dark) {
+  //       return "assets/darktheme/twodaynight.png";
+  //     } else {
+  //       return "assets/twoDay.png";
+  //     }
+  //   } else {
+  //     if (Theme.of(context).brightness == Brightness.dark) {
+  //       return "assets/darktheme/happydark.png";
+  //     } else {
+  //       return "assets/happy.png";
+  //     }
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController wasteController = TextEditingController();
@@ -89,7 +89,9 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           //width: 280,
                           decoration: BoxDecoration(
-                            border: Border.all(),
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Padding(
@@ -109,25 +111,25 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       );
                                     }),
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                //emoji
-                                Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    //color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: AnimatedBuilder(
-                                      //stream: null,
-                                      animation: BalanceController.instance,
-                                      builder: (context, snapshot) {
-                                        return Image.asset(
-                                          emojiResponse(),
-                                        );
-                                      }),
-                                ),
+                                // const SizedBox(
+                                //   width: 30,
+                                // ),
+                                // //emoji
+                                // Container(
+                                //   height: 50,
+                                //   decoration: BoxDecoration(
+                                //     //color: Colors.white,
+                                //     borderRadius: BorderRadius.circular(25),
+                                //   ),
+                                //   child: AnimatedBuilder(
+                                //       //stream: null,
+                                //       animation: BalanceController.instance,
+                                //       builder: (context, snapshot) {
+                                //         return Image.asset(
+                                //           emojiResponse(),
+                                //         );
+                                //       }),
+                                // ),
                               ],
                             ),
                           ),

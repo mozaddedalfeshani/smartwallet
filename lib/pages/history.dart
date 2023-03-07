@@ -52,11 +52,12 @@ class HistoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Material(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
             width: 1,
           ),
         ),

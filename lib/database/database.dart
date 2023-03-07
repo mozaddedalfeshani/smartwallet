@@ -56,6 +56,7 @@ class WalletDb {
   }
 
   Money getMoney(int index) {
+    print(box?.getAt(index));
     return Money.fromMap(box?.getAt(index));
   }
 
@@ -65,6 +66,7 @@ class WalletDb {
               (e) => Money(
                 e["amount"],
                 reason: e["reason"],
+                dateTime: e["date_time"],
               ),
             )
             .toList() ??
@@ -106,7 +108,7 @@ class Money {
     };
   }
 
-  Money.fromMap(Map<String, dynamic> value)
+  Money.fromMap(Map<dynamic, dynamic> value)
       : amount = value["amount"],
         reason = value["reason"],
         _dateTime = value["date_time"];
