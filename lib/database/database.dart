@@ -56,7 +56,6 @@ class WalletDb {
   }
 
   Money getMoney(int index) {
-    print(box?.getAt(index));
     return Money.fromMap(box?.getAt(index));
   }
 
