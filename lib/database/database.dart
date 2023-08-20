@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:pdf/widgets.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WalletDb {
@@ -86,6 +91,92 @@ class WalletDb {
 
   Stream snapshot() {
     return box?.watch() ?? const Stream.empty().asBroadcastStream();
+  }
+
+  Future exportHistoryToPdf() async {
+    List<Money> moneyList = getMoneyList();
+    moneyList.sort(
+      (a, b) => b.dateTime.compareTo(a.dateTime),
+    );
+    Document document = Document();
+    List<TableRow> rows = [];
+    for (Money each in moneyList) {
+      rows.add(TableRow(children: [
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: Text((each.reason ?? "").isEmpty ? "empty" : each.reason!),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: Text(each.amount.toString()),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: Text(each.dateTime.toString()),
+        ),
+      ]));
+    }
+    document.addPage(Page(
+      build: (context) {
+        return Column(
+          children: [
+            Center(
+              child: Text(
+                "History",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+            Table(
+              border: TableBorder.all(),
+              children: [
+                TableRow(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text("Reason"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text("Amount"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text("DateTime"),
+                    ),
+                  ],
+                ),
+                ...rows,
+              ],
+            ),
+          ],
+        );
+      },
+    ));
+    // permissions
+    if (Platform.isAndroid) {
+      if (!(await Permission.storage.isGranted)) {
+        var status = await Permission.storage.request();
+        if (!status.isGranted) {
+          print(status);
+          return;
+        }
+      }
+    }
+    String? path = (Platform.isMacOS || Platform.isWindows)
+        ? await FilePicker.platform.saveFile(
+            allowedExtensions: ["pdf"],
+            fileName: "testing.pdf",
+          )
+        : await FilePicker.platform.getDirectoryPath();
+    if (path == null) {
+      return;
+    }
+    var bytes = await document.save();
+    File file = File(path);
+    file.writeAsBytesSync(bytes);
   }
 }
 

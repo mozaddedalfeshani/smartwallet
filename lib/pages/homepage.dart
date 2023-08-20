@@ -51,21 +51,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: (currentTab != 0)
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: () async {
-                final SharedPreferences pref =
-                    await SharedPreferences.getInstance();
-                double lifeTimeUse = await WalletDb.instance.lifeTimeUse();
-                double lifeTimeEntry = await WalletDb.instance.lifeTimeEntity();
-                WalletDb.instance.resetDb();
-                pref.setDouble("life_time_use", lifeTimeUse);
-                pref.setDouble("life_time_entry", lifeTimeEntry);
-              },
-              icon: const Icon(CupertinoIcons.arrow_2_circlepath),
-              label: const Text("Reset"),
-            ),
       appBar: (currentTab == 2)
           ? null
           : AppBar(
@@ -302,6 +287,26 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: [
+        FloatingActionButton.extended(
+          onPressed: () async {
+            final SharedPreferences pref =
+                await SharedPreferences.getInstance();
+            double lifeTimeUse = await WalletDb.instance.lifeTimeUse();
+            double lifeTimeEntry = await WalletDb.instance.lifeTimeEntity();
+            WalletDb.instance.resetDb();
+            pref.setDouble("life_time_use", lifeTimeUse);
+            pref.setDouble("life_time_entry", lifeTimeEntry);
+          },
+          icon: const Icon(CupertinoIcons.arrow_2_circlepath),
+          label: const Text("Reset"),
+        ),
+        FloatingActionButton.extended(
+          onPressed: () => WalletDb.instance.exportHistoryToPdf(),
+          icon: const Icon(CupertinoIcons.arrow_2_circlepath),
+          label: const Text("To pdf"),
+        )
+      ].elementAtOrNull(currentTab),
     );
   }
 }

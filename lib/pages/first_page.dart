@@ -200,11 +200,11 @@ class _FirstPageState extends State<FirstPage> {
                         // );
                       }
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(CupertinoIcons.graph_square_fill),
-                        Text(" Analyse"),
+                        Text(" Analyses"),
                         //Icon(CupertinoIcons.arrow_right),
                       ],
                     ),
