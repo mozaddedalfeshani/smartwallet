@@ -18,31 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentTab = 0;
-  //cpp function
-  // String emojiResponse() {
-  //   double balance = WalletDb.instance.totalAmount();
-  //   int day = BalanceController.instance.perDayNeed;
-
-  //   if ((balance / day) <= 2) {
-  //     if (Theme.of(context).brightness == Brightness.dark) {
-  //       return "assets/darktheme/saddark.png";
-  //     } else {
-  //       return "assets/sad.png";
-  //     }
-  //   } else if ((balance / day) > 2 && (balance / day) < 7) {
-  //     if (Theme.of(context).brightness == Brightness.dark) {
-  //       return "assets/darktheme/twodaynight.png";
-  //     } else {
-  //       return "assets/twoDay.png";
-  //     }
-  //   } else {
-  //     if (Theme.of(context).brightness == Brightness.dark) {
-  //       return "assets/darktheme/happydark.png";
-  //     } else {
-  //       return "assets/happy.png";
-  //     }
-  //   }
-  // }
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController wasteController = TextEditingController();
@@ -302,7 +277,8 @@ class _HomePageState extends State<HomePage> {
           label: const Text("Reset"),
         ),
         FloatingActionButton.extended(
-          onPressed: () => WalletDb.instance.exportHistoryToPdf(),
+          onPressed: () => WalletDb.instance
+              .exportHistoryToPdf(ScaffoldMessenger.of(context), context),
           icon: const Icon(CupertinoIcons.arrow_2_circlepath),
           label: const Text("To pdf"),
         )
