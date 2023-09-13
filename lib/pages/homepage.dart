@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartwallet/database/database.dart';
 import 'package:smartwallet/pages/balance_controller.dart';
 import 'package:smartwallet/pages/history.dart';
@@ -49,66 +49,125 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Center(
                         child: Container(
-                          //width: 280,
+                          height: MediaQuery.of(context).size.height * .34,
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
                             ),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                //balance show
-                                StreamBuilder(
-                                    stream: WalletDb.instance.snapshot(),
-                                    builder: (context, snapshot) {
-                                      return Flexible(
-                                        child: Text(
-                                          doubleFormatter(
-                                              WalletDb.instance.totalAmount()),
-                                          style: const TextStyle(fontSize: 60),
-                                        ),
-                                      );
-                                    }),
-                                // const SizedBox(
-                                //   width: 30,
-                                // ),
-                                // //emoji
-                                // Container(
-                                //   height: 50,
-                                //   decoration: BoxDecoration(
-                                //     //color: Colors.white,
-                                //     borderRadius: BorderRadius.circular(25),
-                                //   ),
-                                //   child: AnimatedBuilder(
-                                //       //stream: null,
-                                //       animation: BalanceController.instance,
-                                //       builder: (context, snapshot) {
-                                //         return Image.asset(
-                                //           emojiResponse(),
-                                //         );
-                                //       }),
-                                // ),
+                            border: Border.all(width: .5, color: Colors.black),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                Colors.green.shade100,
+                                Colors.white,
+                                Colors.lightGreen.shade200,
                               ],
                             ),
                           ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              StreamBuilder(
+                                  stream: WalletDb.instance.snapshot(),
+                                  builder: (context, snapshot) {
+                                    return Flexible(
+                                      child: Text(
+                                        doubleFormatter(
+                                            WalletDb.instance.totalAmount()),
+                                        style: const TextStyle(
+                                            fontSize: 60, color: Colors.black),
+                                      ),
+                                    );
+                                  }),
+
+                              StreamBuilder(
+                                stream: WalletDb.instance.snapshot(),
+                                builder: (context, snapshot) {
+                                  return Text(
+                                    "\t \t\t\t Assume ${BalanceController.instance.dayLeft()} day left!",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.blue.shade900,
+                                        fontWeight: FontWeight.w500),
+                                  );
+                                },
+                              ),
+                              // Text("Hello"),
+                            ],
+                          ),
                         ),
                       ),
+                      // Center(
+                      //   child: Container(
+                      //     //width: 280,
+                      //     decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //         color: Theme.of(context).colorScheme.onSurface,
+                      //       ),
+                      //       borderRadius: BorderRadius.circular(20),
+                      //     ),
+                      //     child: const Padding(
+                      //       padding: const EdgeInsets.symmetric(horizontal: 80),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           //balance show
+                      //           //container for design more by Murad
+
+                      //           // StreamBuilder(
+                      //           //     stream: WalletDb.instance.snapshot(),
+                      //           //     builder: (context, snapshot) {
+                      //           //       return Flexible(
+                      //           //         child: Text(
+                      //           //           doubleFormatter(
+                      //           //               WalletDb.instance.totalAmount()),
+                      //           //           style: const TextStyle(fontSize: 60),
+                      //           //         ),
+                      //           //       );
+                      //           //     }),
+                      //           // // const SizedBox(
+                      //           // //   width: 30,
+                      //           // // ),
+                      //           // //emoji
+                      //           // Container(
+                      //           //   height: 50,
+                      //           //   decoration: BoxDecoration(
+                      //           //     //color: Colors.white,
+                      //           //     borderRadius: BorderRadius.circular(25),
+                      //           //   ),
+                      //           //   child: AnimatedBuilder(
+                      //           //       //stream: null,
+                      //           //       animation: BalanceController.instance,
+                      //           //       builder: (context, snapshot) {
+                      //           //         return Image.asset(
+                      //           //           emojiResponse(),
+                      //           //         );
+                      //           //       }),
+                      //           // ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
-                      StreamBuilder(
-                        stream: WalletDb.instance.snapshot(),
-                        builder: (context, snapshot) {
-                          return Text(
-                            "Assume ${BalanceController.instance.dayLeft()} day left!",
-                            textAlign: TextAlign.center,
-                          );
-                        },
-                      ),
+                      // StreamBuilder(
+                      //   stream: WalletDb.instance.snapshot(),
+                      //   builder: (context, snapshot) {
+                      //     return Text(
+                      //       "Assume ${BalanceController.instance.dayLeft()} day left!",
+                      //       textAlign: TextAlign.center,
+                      //     );
+                      //   },
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -119,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: TextFormField(
                                 controller: reason,
+                                textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(23),
@@ -137,6 +197,7 @@ class _HomePageState extends State<HomePage> {
                                       RegExp(r"^[0-9]*$"),
                                       allow: true)
                                 ],
+                                textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(23),
@@ -278,7 +339,7 @@ class _HomePageState extends State<HomePage> {
         //   icon: const Icon(CupertinoIcons.arrow_2_circlepath),
         //   label: const Text("Reset"),
         // ),
-        Text(""),
+        const Text(""),
         // FloatingActionButton.extended(
         //   onPressed: () {},
         //   icon: const Icon(Icons.contact_support_outlined),

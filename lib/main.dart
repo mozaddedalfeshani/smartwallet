@@ -14,5 +14,6 @@ void main() async {
   await SettingsController.instance.loadSettings();
   await WalletDb.instance.init("wallet");
   await BalanceController.instance.loadBalance();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   runApp(const MyApp());
 }
