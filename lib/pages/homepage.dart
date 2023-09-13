@@ -26,11 +26,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (currentTab == 2)
+      appBar: (currentTab == 0 || currentTab == 2)
           ? null
           : AppBar(
-              title: const Text(
-                "A penny saved is a penny earned",
+              title: const Center(
+                child: Text(
+                  "H I S T O R Y",
+                ),
               ),
             ),
       body: [
@@ -263,19 +265,25 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: [
-        FloatingActionButton.extended(
-          onPressed: () async {
-            final SharedPreferences pref =
-                await SharedPreferences.getInstance();
-            double lifeTimeUse = await WalletDb.instance.lifeTimeUse();
-            double lifeTimeEntry = await WalletDb.instance.lifeTimeEntity();
-            WalletDb.instance.resetDb();
-            pref.setDouble("life_time_use", lifeTimeUse);
-            pref.setDouble("life_time_entry", lifeTimeEntry);
-          },
-          icon: const Icon(CupertinoIcons.arrow_2_circlepath),
-          label: const Text("Reset"),
-        ),
+        // FloatingActionButton.extended(
+        //   onPressed: () async {
+        //     final SharedPreferences pref =
+        //         await SharedPreferences.getInstance();
+        //     double lifeTimeUse = await WalletDb.instance.lifeTimeUse();
+        //     double lifeTimeEntry = await WalletDb.instance.lifeTimeEntity();
+        //     WalletDb.instance.resetDb();
+        //     pref.setDouble("life_time_use", lifeTimeUse);
+        //     pref.setDouble("life_time_entry", lifeTimeEntry);
+        //   },
+        //   icon: const Icon(CupertinoIcons.arrow_2_circlepath),
+        //   label: const Text("Reset"),
+        // ),
+        Text(""),
+        // FloatingActionButton.extended(
+        //   onPressed: () {},
+        //   icon: const Icon(Icons.contact_support_outlined),
+        //   label: const Text("Contact"),
+        // ),
         FloatingActionButton.extended(
           onPressed: () => WalletDb.instance
               .exportHistoryToPdf(ScaffoldMessenger.of(context), context),
