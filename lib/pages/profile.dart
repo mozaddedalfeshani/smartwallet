@@ -148,15 +148,20 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 FilledButton(
-                  onPressed: () async {
-                    final SharedPreferences pref =
-                        await SharedPreferences.getInstance();
-                    WalletDb.instance.resetDb();
-                    pref.setDouble("life_time_use", 0);
-                    pref.setDouble("life_time_entry", 0);
-                  },
+                  onPressed: () => _showConfirmationDialog(context),
                   child: const Text("Reset All"),
                 ),
+
+                // FilledButton(
+                //   onPressed: () async {
+                //     final SharedPreferences pref =
+                //         await SharedPreferences.getInstance();
+                //     WalletDb.instance.resetDb();
+                //     pref.setDouble("life_time_use", 0);
+                //     pref.setDouble("life_time_entry", 0);
+                //   },
+                //   child: const Text("Reset All"),
+                // ),
                 AnimatedBuilder(
                   animation: SettingsController.instance,
                   builder: (context, snapshot) {
@@ -182,6 +187,38 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Reset"),
+          content: const Text(
+              "Are you sure you want to reset the database? This action cannot be undone."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                final SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+                WalletDb.instance.resetDb();
+                pref.setDouble("life_time_use", 0);
+                pref.setDouble("life_time_entry", 0);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Reset"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
